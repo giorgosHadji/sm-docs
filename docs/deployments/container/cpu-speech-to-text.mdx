@@ -254,7 +254,7 @@ CPU usage scales with the number of active sessions, whereas most memory usage i
 
 The first-session loading time can be reduced down to several hundred milliseconds by prewarming the transcriber.
 
-You can enable this feature by setting the `SM_PREWARM_ENGINE_MODES` environment variable, with a semicolon separated list describing the required engine modes. For example, to prewarm 1 English GPU Standard and 2 English GPU Enhanced:
+You can enable this feature by setting the `SM_PREWARM_ENGINE_MODES` environment variable, with a semicolon separated list describing the required engine modes. For example, to prewarm 1 English GPU Standard and 2 English GPU Enhanced sessions:
 `SM_PREWARM_ENGINE_MODES='en_general_gpu_standard:1;en_general_gpu_enhanced:2'`
 
 In general, the format is: `{language}_{domain}_{processor}_{operating_point}:{prewarm_connections}`.
@@ -317,7 +317,7 @@ The results list are sorted by increasing `start_time`, with a supplementary rul
 
 #### Transcription duration information
 
-The Container will output a log message after every transcription session to indicate the duration of speech transcribed
+The container will output a log message after every transcription session to indicate the duration of speech transcribed
 during that session. This duration only includes speech, and not any silence or background noise which was present in the audio.
 This data can be used to report usage back to us, or simply for your own records.
 
@@ -335,7 +335,7 @@ Consider using the following regular expression to extract just the seconds part
 
 ### Read-only mode
 
-Users may wish to run the Container in read-only mode. This may be necessary due to their regulatory environment, or a requirement not to write any media file to disk. An example of how to do this is below.
+Users may wish to run the container in read-only mode. This may be necessary due to their regulatory environment, or a requirement not to write any media file to disk. An example of how to do this is below.
 
 <CodeBlock language="bash">
   {`docker run -it --read-only \\
@@ -345,9 +345,9 @@ Users may wish to run the Container in read-only mode. This may be necessary due
     rt-asr-transcriber-en:${smVariables.latestContainerVersion}`}
 </CodeBlock>
 
-The Container still requires a temporary directory with write permissions. Users can provide a directory (e.g `/tmp`) by using the `--tmpfs` Docker argument. A tmpfs mount is temporary, and only persisted in the host memory. When the Container stops, the tmpfs mount is removed, and files written there won’t be persisted.
+The container still requires a temporary directory with write permissions. Users can provide a directory (e.g `/tmp`) by using the `--tmpfs` Docker argument. A tmpfs mount is temporary, and only persisted in the host memory. When the container stops, the tmpfs mount is removed, and files written there won’t be persisted.
 
-If customers want to use the shared Custom Dictionary Cache feature, they must also specify the location of cache and mount it as a volume
+If customers want to use the [shared Custom Dictionary Cache](#how-to-use-a-shared-custom-dictionary-cache) feature, they must also specify the location of cache and mount it as a volume
 
 <CodeBlock language="bash">
   {`docker run -it --read-only \\
@@ -362,7 +362,7 @@ If customers want to use the shared Custom Dictionary Cache feature, they must a
 
 ### Running container as a non-root user
 
-A Realtime Container can be run as a non-root user with no impact to feature functionality. This may be required if a hosting environment or a company's internal regulations specify that a Container must be run as a named user.
+A Realtime container can be run as a non-root user with no impact to feature functionality. This may be required if a hosting environment or a company's internal regulations specify that a container must be run as a named user.
 
 Users may specify the non-root command by the `docker run –-user $USERNUMBER:$GROUPID`. User number and group ID are non-zero numerical values from a value of **1** up to a value of **65535**
 
