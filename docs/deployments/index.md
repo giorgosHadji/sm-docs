@@ -18,9 +18,10 @@ The best way to get started using Speechmatics' cloud services is:
 
 Deploy Speechmatics services in your own environment using containers. This option provides maximum control over your deployment and data.
 
-- [CPU Speech-to-Text Container](/deployments/container/cpu-speech-to-text): Deploy the Speechmatics speech-to-text engine as a containerized service on your own hardware.
-- [Language ID Container](/deployments/container/language-id): Identify the language spoken in your audio using the Language ID container.
-- [Translation Container](/deployments/container/gpu-translation): Translate audio from one language to another using the Translation container.
+- [CPU Speech-to-Text container](/deployments/container/cpu-speech-to-text): Deploy the Speechmatics speech-to-text engine as a containerized service on your own hardware.
+- [GPU Speech-to-Text container](/deployments/container/gpu-speech-to-text): Deploy the Speechmatics speech-to-text engine as a containerized service on your own hardware.
+- [Language ID container](/deployments/container/language-id): Identify the language spoken in your audio using the Language ID container.
+- [Translation container](/deployments/container/gpu-translation): Translate audio from one language to another using the Translation container.
 
 
 ## Feature Availability
@@ -37,7 +38,7 @@ Feature availability varies depending on the deployment method you choose. Below
 | [Custom Dictionary](/speech-to-text/features/custom-dictionary) | Batch, Realtime | SaaS, On-prem |
 | [Diarization](/speech-to-text/features/diarization) | Batch, Realtime | SaaS, On-prem |
 | [Disfluencies and Word Replacement](/speech-to-text/formatting#disfluencies) | Batch, Realtime | SaaS, On-prem |
-| [End-of-Turn](/speech-to-text/realtime/end-of-turn) | Realtime | SaaS, On-prem |
+| [End-of-Utterance](/speech-to-text/realtime/end-of-utterance) | Realtime | SaaS, On-prem |
 | [Feature Discovery](/speech-to-text/features/feature-discovery) | Batch, Realtime | SaaS |
 | [Fetch URL](/speech-to-text/batch/input#fetch-url) | Batch | SaaS, On-Prem |
 | [Language Identification](/speech-to-text/batch/language-identification) | Batch | SaaS |
