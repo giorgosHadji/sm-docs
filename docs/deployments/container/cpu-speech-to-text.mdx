@@ -52,7 +52,7 @@ Each Batch container processes one input file and outputs a resulting transcript
 
 All data is transitory. Once a container completes its transcription it removes all record of the operation.
 
-Input file sizes up to 2 hours in length or 4GB in size.
+The input file can be up to 2 hours in length or 4GB in size.
 
 ### Input methods
 
@@ -77,7 +77,7 @@ Pull an audio file from a mapped directory into the `input.audio` file within th
 
 See [Docker docs](https://docs.docker.com/engine/reference/commandline/run/) for a full list of the available options.
 
-Both the methods will produce the same transcribed outcome and will write a JSON response to standard output (stdout) and any other logs to standard error (stderr).
+Both methods will produce the same transcribed outcome and will write a JSON response to standard output (stdout) and any other logs to standard error (stderr).
 The intermediate files created during the transcription are stored in `/home/smuser/work`. This is the case whether running the container as a root or non-root user.
 
 Here is an example output:
@@ -133,24 +133,24 @@ Here is an example output:
 
 
 
-The exit code of the Container will also determine if the transcription was successful. There are two exit code possibilities:
+The exit code of the container will also determine if the transcription was successful. There are two exit code possibilities:
 
 - `Exit Code == 0` : The transcript was a success; the output will contain a JSON output defining the transcript (more info below)
 - `Exit Code != 0` : the output will contain a stack trace and other useful information. This output should be used in any communication with Speechmatics Support to aid understanding and resolution of any problems that may occur
 
 If you encounter any issues refer to the [troubleshooting](/deployments/container/troubleshooting) documentation, which includes more detailed exit codes.
 
-Now that you have successfully run a job, you can use the above APIs in your workflow. In the following section we will show ways you can modify the container to create simple ways of orchestrating the it within your deployments.
+Now that you have successfully run a job, you can use the above APIs in your workflow. In the following section we will show you how to modify the container to create simple ways of orchestrating it within your deployments.
 
 ### Modifying the image
 
 #### Building an image
 
-Using STDIN to pass files in and obtain the transcription may not be sufficient for all use cases. It is possible to build a new Docker Image that will use the Speechmatics Image as a layer if required for your specific workflow. To include the Speechmatics Docker Image inside another image, ensure to add the pulled Docker Image into the Dockerfile for the new application.
+Using STDIN to pass files in and obtain the transcription may not be sufficient for all use cases. It is possible to build a new docker image that will use the Speechmatics Image as a layer if required for your specific workflow. To include the Speechmatics docker image inside another image, ensure to add the pulled docker image into the Dockerfile for the new application.
 
 #### Requirements for a custom image
 
-To ensure the Speechmatics Docker Image works as expected inside the custom image, please consider the following:
+To ensure the Speechmatics docker image works as expected inside the custom image, please consider the following:
 
 - Any audio that needs to be transcribed must to be copied to a file called `/input.audio` inside the running Container
 - To initiate transcription, call the application `pipeline`. The `pipeline` will start the transcription service and use `/input.audio` as the audio source
@@ -159,7 +159,7 @@ To ensure the Speechmatics Docker Image works as expected inside the custom imag
 
 #### Dockerfile
 
-To add a Speechmatics Docker Image into a custom one, the Dockerfile must be modified to include the full image name of the locally available image.
+To add a Speechmatics docker image into a custom one, the Dockerfile must be modified to include the full image name of the locally available image.
 
 <>
   Example: Adding English (en) with tag{" "}
@@ -173,10 +173,10 @@ RUN chmod +x /usr/local/bin/download_audio.sh
 CMD ["/usr/local/bin/download_audio.sh"]`}
 </CodeBlock>
 
-Once the above image is built, and a Container instantiated from it, a script called `download_audio.sh` will be executed (this could do something like pulling a file from a webserver and copying it to `/input.audio` before starting the pipeline application). This is a very basic Dockerfile to demonstrate a way of orchestrating the Speechmatics Docker Image.
+Once the above image is built, and a container instantiated from it, a script called `download_audio.sh` will be executed (this could do something like pulling a file from a webserver and copying it to `/input.audio` before starting the pipeline application). This is a very basic Dockerfile to demonstrate a way of orchestrating the Speechmatics docker image.
 
 :::info
-  For support purposes, it is assumed the Docker Image provided by
+  For support purposes, it is assumed the docker image provided by
   Speechmatics has been unmodified. If you experience issues, Speechmatics
   support will require you to replicate the issues with the unmodified Docker
   image e.g.
@@ -185,7 +185,7 @@ Once the above image is built, and a Container instantiated from it, a script ca
 
 ### Parallel processing guide
 
-For customers who are looking to improve job turnaround time and who are able to assign sufficient resources, it is possible to pass a parallel transcription parameter to the container to take advantage of multiple CPUs. The parameter is called parallel and the following example shows how it can be used. In this case to use 4 cores to process the audio you would run the Container like this:
+For customers who are looking to improve job turnaround time and who are able to assign sufficient resources, it is possible to pass a parallel transcription parameter to the container to take advantage of multiple CPUs. The parameter is called `parallel` and the following example shows how it can be used. In this case to use 4 cores to process the audio you would run the container like this:
 
 <CodeBlock language="bash">
   {`docker run -i \\
@@ -197,7 +197,7 @@ For customers who are looking to improve job turnaround time and who are able to
 
 Depending on your hardware, you may need to experiment to find the optimum performance. We've noticed significant improvement in turnaround time for jobs by using this approach.
 
-If you limit or are limited on the number of CPUs you can use (for example your platform places restrictions on the number of cores you can use, or you use the --cpu flag in your docker run command), then you should ensure that you do not set the parallel value to be more than the number of available cores. If you attempt to use a setting in excess of your free resources, then the Container will only use the available cores.
+If you limit or are limited on the number of CPUs you can use (for example your platform places restrictions on the number of cores you can use, or you use the `--cpu` flag in your docker run command), then you should ensure that you do not set the parallel value to be more than the number of available cores. If you attempt to use a setting in excess of your free resources, then the container will only use the available cores.
 
 If you simply increase the parallel setting to a large number you will see diminishing returns. Moreover, because files are split into 5 minute chunks for parallel processing, if your files are shorter than 5 minutes then you will see no parallelization (in general the longer your audio files the more speedup you will see by using parallel processing).
 
