@@ -40,9 +40,12 @@ sequenceDiagram
   loop Audio Stream
     Client->>API: AddAudio
     API-->>Client: AudioAdded
+    Client->>API: AddChannelAudio (optional)
+    API-->>Client: ChannelAudioAdded (optional)
     API-->>Client: AddPartialTranscript (optional)
     API-->>Client: AddTranscript (optional)
   end
+  Client->>API: EndOfChannel (optional)
   Client->>API: EndOfStream
   API-->>Client: EndOfTranscript
 ```
